@@ -46,6 +46,7 @@ func MakeHTTPHandler(f apiFunc) http.HandlerFunc {
 		if err := f(w, r); err != nil {
 			if e, ok := err.(APIError); ok {
 				WriteJSON(w, e)
+				return
 			}
 			resp := NewJSONResponse(http.StatusInternalServerError, "internal server error", nil)
 			WriteJSON(w, resp)
